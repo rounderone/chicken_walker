@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv*/
+ENV/
+.venv/
+
+# Isaac Sim/Lab
+IsaacLab/
+isaac-sim-mcp/
+logs/
+*.pyc
+
+# Blender
+*.blend1
+*.blend2
+
+# Large model files
+*.pt
+*.pth
+*.onnx
+*.usd
+*.usdc
+*.usda
+
+# Keep specific USD files by un-ignoring in subdirectory
+!usd/.gitkeep
+
+# Models source files (large)
+models/source/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp files
+*.tmp
+*.log
+*.bak
