@@ -1,0 +1,92 @@
+# AT-ST Robot Configuration for Isaac Sim
+# Based on Star Wars AT-ST (All Terrain Scout Transport) specifications
+
+robot:
+  name: "ATST"
+  description: "Star Wars AT-ST Walker - Bipedal Scout Transport"
+  usd_path: "../usd/atst_physics.usda"
+
+physical_properties:
+  total_mass_kg: 12000
+  height_m: 8.6
+  stride_length_m: 4.0
+  max_speed_kmh: 90
+
+body:
+  mass_kg: 8000
+  center_of_mass: [0, 0, 5.5]  # meters from ground
+
+legs:
+  left:
+    hip:
+      mass_kg: 500
+      joint_type: "revolute"
+      axis: [1, 0, 0]
+      limits_deg: [-30, 30]
+      stiffness: 100000
+      damping: 10000
+
+    knee:
+      mass_kg: 800
+      joint_type: "revolute"
+      axis: [1, 0, 0]
+      limits_deg: [-60, 20]
+      stiffness: 100000
+      damping: 10000
+
+    ankle:
+      mass_kg: 400
+      joint_type: "revolute"
+      axis: [1, 0, 0]
+      limits_deg: [-25, 25]
+      stiffness: 50000
+      damping: 5000
+
+    foot:
+      mass_kg: 300
+      collision_type: "convexHull"
+
+  right:
+    # Mirror of left leg
+    hip:
+      mass_kg: 500
+      joint_type: "revolute"
+      axis: [1, 0, 0]
+      limits_deg: [-30, 30]
+      stiffness: 100000
+      damping: 10000
+
+    knee:
+      mass_kg: 800
+      joint_type: "revolute"
+      axis: [1, 0, 0]
+      limits_deg: [-60, 20]
+      stiffness: 100000
+      damping: 10000
+
+    ankle:
+      mass_kg: 400
+      joint_type: "revolute"
+      axis: [1, 0, 0]
+      limits_deg: [-25, 25]
+      stiffness: 50000
+      damping: 5000
+
+    foot:
+      mass_kg: 300
+      collision_type: "convexHull"
+
+physics:
+  solver:
+    type: "TGS"
+    position_iterations: 32
+    velocity_iterations: 16
+  collision:
+    enable_ccd: true
+    contact_offset: 0.02
+    rest_offset: 0.01
+
+simulation:
+  time_step: 0.01  # 100 Hz
+  substeps: 4
+  gravity: [0, 0, -9.81]

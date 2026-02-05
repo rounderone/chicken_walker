@@ -1,0 +1,63 @@
+cassie:
+  ros__parameters:
+    update_rate: 100
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    cassie_joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+      ros__parameters:
+        joints:
+          - left_hip_roll
+          - left_hip_pitch
+          - left_knee
+          - left_ankle
+          - right_hip_roll
+          - right_hip_pitch
+          - right_knee
+          - right_ankle
+
+        command_interfaces:
+          - position
+          - velocity
+
+        state_interfaces:
+          - position
+          - velocity
+
+        state_publish_rate: 100.0
+        action_monitor_rate: 20.0
+
+        allow_partial_joints_goal: true
+        constraints:
+          stopped_velocity_tolerance: 0.01
+          goal_time: 0.0
+
+        gains:
+          left_hip_roll:    { p: 100.0, d: 10.0 }
+          left_hip_pitch:   { p: 100.0, d: 10.0 }
+          left_knee:        { p: 100.0, d: 10.0 }
+          left_ankle:       { p: 100.0, d: 10.0 }
+          right_hip_roll:   { p: 100.0, d: 10.0 }
+          right_hip_pitch:  { p: 100.0, d: 10.0 }
+          right_knee:       { p: 100.0, d: 10.0 }
+          right_ankle:      { p: 100.0, d: 10.0 }
+
+        angle_wraparound:
+          left_hip_roll:    true
+          right_hip_roll:   true
+
+    effort_controllers:
+      type: effort_controllers/JointGroupEffortController
+      ros__parameters:
+        joints:
+          - left_hip_roll
+          - left_hip_pitch
+          - left_knee
+          - left_ankle
+          - right_hip_roll
+          - right_hip_pitch
+          - right_knee
+          - right_ankle
+        interface_name: effort

@@ -1,6 +1,68 @@
 # AT-ST Project - Progress Log
 
-## Session: 2026-02-04 (Current)
+## Session: 2026-02-05 (Current)
+
+### Focus: Visual Model Integration via Blender MCP
+
+### Accomplishments
+
+1. **Used Blender MCP to Split AT-ST Mesh**
+   - Connected to Blender via MCP server (port 9876)
+   - Split Sketchfab AT-ST model into 10 articulated parts by bone weights
+   - Parts: torso, head, thigh_L/R, shin_L/R, elbow_L/R, foot_L/R
+   - Saved as: `D:/Projects/ATST/models/atst_articulated.blend`
+
+2. **Exported Parts as OBJ Files**
+   - Exported each part to `D:/Projects/ATST/usd/parts/`
+   - Files: ATST_torso.obj, ATST_head.obj, ATST_thigh_L/R.obj, etc.
+
+3. **Created URDF Robot Description**
+   - Built `D:/Projects/ATST/urdf/atst_robot.urdf`
+   - 10 links with visual mesh references
+   - 9 revolute joints with proper limits
+   - Mass properties: heavy feet (500kg) for stability
+
+4. **Diagnosed Mesh Visibility Issue**
+   - URDF-imported OBJ meshes not rendering in Isaac Sim
+   - **Root cause**: External OBJ file references not resolving properly
+   - **Discovery**: Working AT-ST uses native USD geometry (Cube/Capsule primitives)
+   - These render automatically without external file dependencies
+
+5. **Created Visual Mesh Integration Script**
+   - `isaac_sim/add_visual_meshes.py` - loads working physics model and adds visuals
+   - Approach: Keep working primitive physics, overlay detailed meshes
+
+### Key Insight
+The working `atst_rl.usda` model succeeds because it uses **native USD geometry types** (`def Cube`, `def Capsule`) which Isaac Sim renders automatically. URDF imports with external mesh file references require additional conversion steps.
+
+### Files Created This Session
+```
+urdf/
+  atst_robot.urdf              # Robot description with OBJ mesh references
+
+usd/parts/
+  ATST_torso.obj               # Individual mesh parts from Blender
+  ATST_head.obj
+  ATST_thigh_L.obj, ATST_thigh_R.obj
+  ATST_shin_L.obj, ATST_shin_R.obj
+  ATST_elbow_L.obj, ATST_elbow_R.obj
+  ATST_foot_L.obj, ATST_foot_R.obj
+
+models/
+  atst_articulated.blend       # Blender file with split/rigged AT-ST
+
+isaac_sim/
+  add_visual_meshes.py         # Script to add visual meshes to physics model
+```
+
+### Current State
+- **Physics walker**: WORKING - primitive geometry with trained policy
+- **Visual meshes**: EXPORTED - 10 OBJ files ready for integration
+- **Integration**: IN PROGRESS - need to convert OBJs to USD or use asset converter
+
+---
+
+## Session: 2026-02-04
 
 ### Major Accomplishment: WORKING WALKER!
 Successfully trained an RL policy that makes a digitigrade AT-ST walk! The physics model uses primitive geometry (capsules/boxes) and achieves ~82% survival rate.

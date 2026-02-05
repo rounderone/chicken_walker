@@ -1,0 +1,246 @@
+<?xml version="1.0"?>
+<robot name="atst">
+
+  <link name="torso">
+    <visual>
+      <geometry>
+        <mesh filename="file:///D:/Projects/ATST/usd/parts/ATST_torso.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.8 0.6 0.5"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="500"/>
+      <inertia ixx="50" ixy="0" ixz="0" iyy="50" iyz="0" izz="50"/>
+    </inertial>
+  </link>
+
+  <link name="head">
+    <visual>
+      <geometry>
+        <mesh filename="file:///D:/Projects/ATST/usd/parts/ATST_head.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1.0 0.8 0.6"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="200"/>
+      <inertia ixx="20" ixy="0" ixz="0" iyy="20" iyz="0" izz="20"/>
+    </inertial>
+  </link>
+
+  <joint name="head_joint" type="revolute">
+    <parent link="torso"/>
+    <child link="head"/>
+    <origin xyz="0 -0.19 0.5" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1"/>
+  </joint>
+
+  <link name="thigh_L">
+    <visual>
+      <geometry>
+        <mesh filename="file:///D:/Projects/ATST/usd/parts/ATST_thigh_L.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="1.4" radius="0.15"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="50"/>
+      <inertia ixx="5" ixy="0" ixz="0" iyy="5" iyz="0" izz="5"/>
+    </inertial>
+  </link>
+
+  <joint name="hip_L" type="revolute">
+    <parent link="torso"/>
+    <child link="thigh_L"/>
+    <origin xyz="0.5 0 -0.2" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.78" upper="0.78" effort="200" velocity="2"/>
+  </joint>
+
+  <link name="shin_L">
+    <visual>
+      <geometry>
+        <mesh filename="file:///D:/Projects/ATST/usd/parts/ATST_shin_L.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="2.2" radius="0.1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="30"/>
+      <inertia ixx="3" ixy="0" ixz="0" iyy="3" iyz="0" izz="3"/>
+    </inertial>
+  </link>
+
+  <joint name="knee_L" type="revolute">
+    <parent link="thigh_L"/>
+    <child link="shin_L"/>
+    <origin xyz="0 0.7 -0.7" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-1.57" upper="0.78" effort="200" velocity="2"/>
+  </joint>
+
+  <link name="elbow_L">
+    <visual>
+      <geometry>
+        <mesh filename="file:///D:/Projects/ATST/usd/parts/ATST_elbow_L.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.5" radius="0.1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="20"/>
+      <inertia ixx="2" ixy="0" ixz="0" iyy="2" iyz="0" izz="2"/>
+    </inertial>
+  </link>
+
+  <joint name="elbow_L_joint" type="revolute">
+    <parent link="shin_L"/>
+    <child link="elbow_L"/>
+    <origin xyz="0 0.1 -2.0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.78" upper="0.78" effort="150" velocity="2"/>
+  </joint>
+
+  <link name="foot_L">
+    <visual>
+      <geometry>
+        <mesh filename="file:///D:/Projects/ATST/usd/parts/ATST_foot_L.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.8 1.2 0.1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="500"/>
+      <inertia ixx="50" ixy="0" ixz="0" iyy="50" iyz="0" izz="50"/>
+    </inertial>
+  </link>
+
+  <joint name="ankle_L" type="revolute">
+    <parent link="elbow_L"/>
+    <child link="foot_L"/>
+    <origin xyz="0 -0.2 -0.4" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.52" upper="0.52" effort="100" velocity="2"/>
+  </joint>
+
+  <link name="thigh_R">
+    <visual>
+      <geometry>
+        <mesh filename="file:///D:/Projects/ATST/usd/parts/ATST_thigh_R.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="1.4" radius="0.15"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="50"/>
+      <inertia ixx="5" ixy="0" ixz="0" iyy="5" iyz="0" izz="5"/>
+    </inertial>
+  </link>
+
+  <joint name="hip_R" type="revolute">
+    <parent link="torso"/>
+    <child link="thigh_R"/>
+    <origin xyz="-0.5 0 -0.2" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.78" upper="0.78" effort="200" velocity="2"/>
+  </joint>
+
+  <link name="shin_R">
+    <visual>
+      <geometry>
+        <mesh filename="file:///D:/Projects/ATST/usd/parts/ATST_shin_R.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="2.2" radius="0.1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="30"/>
+      <inertia ixx="3" ixy="0" ixz="0" iyy="3" iyz="0" izz="3"/>
+    </inertial>
+  </link>
+
+  <joint name="knee_R" type="revolute">
+    <parent link="thigh_R"/>
+    <child link="shin_R"/>
+    <origin xyz="0 0.7 -0.7" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-1.57" upper="0.78" effort="200" velocity="2"/>
+  </joint>
+
+  <link name="elbow_R">
+    <visual>
+      <geometry>
+        <mesh filename="file:///D:/Projects/ATST/usd/parts/ATST_elbow_R.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.5" radius="0.1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="20"/>
+      <inertia ixx="2" ixy="0" ixz="0" iyy="2" iyz="0" izz="2"/>
+    </inertial>
+  </link>
+
+  <joint name="elbow_R_joint" type="revolute">
+    <parent link="shin_R"/>
+    <child link="elbow_R"/>
+    <origin xyz="0 0.1 -2.0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.78" upper="0.78" effort="150" velocity="2"/>
+  </joint>
+
+  <link name="foot_R">
+    <visual>
+      <geometry>
+        <mesh filename="file:///D:/Projects/ATST/usd/parts/ATST_foot_R.obj"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.8 1.2 0.1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="500"/>
+      <inertia ixx="50" ixy="0" ixz="0" iyy="50" iyz="0" izz="50"/>
+    </inertial>
+  </link>
+
+  <joint name="ankle_R" type="revolute">
+    <parent link="elbow_R"/>
+    <child link="foot_R"/>
+    <origin xyz="0 -0.2 -0.4" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.52" upper="0.52" effort="100" velocity="2"/>
+  </joint>
+
+</robot>

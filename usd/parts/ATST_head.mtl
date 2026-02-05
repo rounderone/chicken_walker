@@ -1,0 +1,13 @@
+# Blender 5.0.1 MTL File: 'atst_articulated.blend'
+# www.blender.org
+
+newmtl ATST_cockpit
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd D:/Projects/ATST/models/source/ATST_Cockpit_Base_Colour.png
+map_Ns D:/Projects/ATST/models/source/ATST_Cockpit_Roughness.png
+map_refl D:/Projects/ATST/models/source/ATST_Cockpit_Metallic.png
