@@ -8,29 +8,26 @@ venv*/
 ENV/
 .venv/
 
-# Isaac Sim/Lab
+# Isaac Sim/Lab (large cloned repos)
 IsaacLab/
 isaac-sim-mcp/
+blender-mcp/
 logs/
-*.pyc
 
-# Blender
+# Blender backup files
 *.blend1
 *.blend2
 
-# Large model files
+# Large ML model files
 *.pt
 *.pth
 *.onnx
-*.usd
-*.usdc
-*.usda
 
-# Keep specific USD files by un-ignoring in subdirectory
-!usd/.gitkeep
-
-# Models source files (large)
+# Models source files (large FBX/textures)
 models/source/
+
+# Thingiverse STL files (large)
+thingiverse/
 
 # IDE
 .idea/
@@ -46,3 +43,11 @@ Thumbs.db
 *.tmp
 *.log
 *.bak
+nul
+
+# Claude local files
+.claude/
+
+# Misc temp files
+'
+=

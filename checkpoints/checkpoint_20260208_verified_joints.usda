@@ -1,0 +1,246 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, 0, 0)
+                double radius = 5
+            }
+            dictionary Perspective = {
+                double3 position = (1.2133684622414767, 2.735547287751257, 3.714217144556085)
+                double3 target = (1.0538999999999994, 0.4723999999999977, 3.069)
+            }
+            dictionary Right = {
+                double3 position = (0, -5, 0)
+                double radius = 5
+            }
+            dictionary Top = {
+                double3 position = (0, 0, 5)
+                double radius = 5
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary omni_layer = {
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+        }
+    }
+    endTimeCode = 1000000
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = "Z"
+)
+
+def "Render" (
+    hide_in_stage_window = true
+    no_delete = true
+)
+{
+    def "OmniverseKit"
+    {
+        def "HydraTextures" (
+            hide_in_stage_window = true
+            no_delete = true
+        )
+        {
+            def RenderProduct "omni_kit_widget_viewport_ViewportTexture_0" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </OmniverseKit_Persp>
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                bool omni:rtx:material:db:nonVisualMaterialCSV:enabled = 0
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                int omni:rtx:pt:clampSpp = 64
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:maxVolumeBounces = 4
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                int omni:rtx:pt:samplesPerIteration = 64
+                int omni:rtx:pt:samplesPerPixel = 64
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                int omni:rtx:scene:hydra:subdivision:refinementLevel = 0
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = </Render/Vars/LdrColor>
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
+        }
+    }
+
+    def RenderSettings "OmniverseGlobalRenderSettings" (
+        prepend apiSchemas = ["OmniRtxSettingsGlobalRtAdvancedAPI_1", "OmniRtxSettingsGlobalPtAdvancedAPI_1"]
+        no_delete = true
+    )
+    {
+        rel products = </Render/OmniverseKit/HydraTextures/omni_kit_widget_viewport_ViewportTexture_0>
+    }
+
+    def "Vars"
+    {
+        def RenderVar "LdrColor" (
+            hide_in_stage_window = true
+            no_delete = true
+        )
+        {
+            uniform string sourceName = "LdrColor"
+        }
+    }
+}
+
+def "World"
+{
+    def Mesh "Ground"
+    {
+        int[] faceVertexCounts = [4]
+        int[] faceVertexIndices = [0, 1, 2, 3]
+        point3f[] points = [(-20, -20, 0), (20, -20, 0), (20, 20, 0), (-20, 20, 0)]
+        color3f[] primvars:displayColor = [(0.3, 0.35, 0.3)]
+    }
+
+    def DomeLight "DomeLight"
+    {
+        float inputs:intensity = 1500
+    }
+
+    def Xform "ATST" (
+        prepend references = @./atst_with_bars.usda@
+    )
+    {
+        double3 xformOp:translate = (0, 0, 4.05)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Xform "JointMarkers"
+    {
+        def Sphere "foot_L"
+        {
+            color3f[] primvars:displayColor = [(1, 0, 1)]
+            double radius = 0.08
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.7567511563890372, 1.0095, 0.3534)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Sphere "foot_R"
+        {
+            color3f[] primvars:displayColor = [(1, 0, 1)]
+            double radius = 0.08
+            double3 xformOp:translate = (-0.7187, 1.0095, 0.3534)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "ankle_L"
+        {
+            color3f[] primvars:displayColor = [(0, 1, 1)]
+            double radius = 0.08
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.775509486125051, 1.515, 0.5983)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Sphere "ankle_R"
+        {
+            color3f[] primvars:displayColor = [(0, 1, 1)]
+            double radius = 0.08
+            double3 xformOp:translate = (-0.7407, 1.515, 0.5983)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "knee_L"
+        {
+            color3f[] primvars:displayColor = [(0, 0, 1)]
+            double radius = 0.08
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.9436925462322177, 1.8605, 2.8202)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Sphere "knee_R"
+        {
+            color3f[] primvars:displayColor = [(0, 0, 1)]
+            double radius = 0.08
+            double3 xformOp:translate = (-1.0036, 1.8605, 2.8202)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "hip_L"
+        {
+            color3f[] primvars:displayColor = [(0, 1, 0)]
+            double radius = 0.08
+            double3 xformOp:translate = (1.0539, 0.4724, 3.069)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "hip_R"
+        {
+            color3f[] primvars:displayColor = [(0, 1, 0)]
+            double radius = 0.08
+            double3 xformOp:translate = (-1.0539, 0.4724, 3.069)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "legbar_L"
+        {
+            color3f[] primvars:displayColor = [(1, 0.5, 0)]
+            double radius = 0.08
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.7270021215689626, 0.4491, 3.018712931208778)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Sphere "legbar_R"
+        {
+            color3f[] primvars:displayColor = [(1, 0.5, 0)]
+            double radius = 0.08
+            double3 xformOp:translate = (-0.7178, 0.4491, 3.0657)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "torsobar_L"
+        {
+            color3f[] primvars:displayColor = [(1, 0, 0)]
+            double radius = 0.08
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.6400942987814636, 1.0502719495117288, 3.006685846422717)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Sphere "torsobar_R"
+        {
+            color3f[] primvars:displayColor = [(1, 0, 0)]
+            double radius = 0.08
+            double3 xformOp:translate = (-0.5, 1.5, 3.8)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "neck"
+        {
+            color3f[] primvars:displayColor = [(1, 1, 0)]
+            double radius = 0.08
+            double3 xformOp:translate = (0, 0.2631, 3.3808)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+    }
+}
+
